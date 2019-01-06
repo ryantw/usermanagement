@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users_manage")
 public class User extends BaseEntity {
 
     @Builder

@@ -2,7 +2,6 @@ package io.lker.usermanagement.bootstrap;
 
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +27,10 @@ public class StartUpData implements CommandLineRunner {
 
         userService.save(user1);
         userService.save(user2);
+
+        User user3 = new User();
+        user3.setId(3L);
+        user3.setFirstName("Test");
+        userService.save(user3);
     }
 }
