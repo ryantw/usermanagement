@@ -3,6 +3,7 @@ package io.lker.usermanagement.controllers;
 import com.google.gson.reflect.TypeToken;
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.UserService;
+import io.lker.usermanagement.services.springjpa.UserJPAService;
 import io.lker.usermanagement.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class UserControllerTest {
 
     @Mock
-    UserService userService;
+    UserJPAService userService;
 
     @InjectMocks
     UserController userController;

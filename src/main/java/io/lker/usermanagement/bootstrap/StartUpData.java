@@ -24,13 +24,11 @@ public class StartUpData implements CommandLineRunner {
                 .emailAddress("r@r.com").build();
         User user2 = User.builder().id(2L).firstName("Alicia").lastName("Walker")
                 .emailAddress("a@a.com").build();
+        User user3 = User.builder().id(3L).firstName("John").lastName("Smith")
+                .emailAddress("js@js.com").build();
 
         userService.save(user1);
         userService.save(user2);
-
-        User user3 = new User();
-        user3.setId(3L);
-        user3.setFirstName("Test");
         userService.save(user3);
     }
 }

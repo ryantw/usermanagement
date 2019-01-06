@@ -38,8 +38,6 @@ public class UserController {
             return null;
 
         List<User> results = userService.findAllByLastNameLike("%" + lastName + "%");
-        System.out.println(lastName);
-        System.out.println(results.size());
 
         if(results.isEmpty()){
             //result.rejectValue("lastName", "notFound", "not found");
