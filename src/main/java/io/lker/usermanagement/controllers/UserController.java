@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
+@RequestMapping("/users")
 @RestController
 public class UserController {
 
@@ -27,7 +28,7 @@ public class UserController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @GetMapping("/users/findAll")
+    @GetMapping("/findAll")
     public Set<User> findAllUsers(){
         return userService.findAll();
     }
