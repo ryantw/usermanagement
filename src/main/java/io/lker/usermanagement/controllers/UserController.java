@@ -4,10 +4,7 @@ import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -31,6 +28,11 @@ public class UserController {
     @GetMapping("/findAll")
     public Set<User> findAllUsers(){
         return userService.findAll();
+    }
+
+    @GetMapping("/{userId}")
+    public User getUserDetailsById(@PathVariable("userId") Long userId){
+        return userService.findById(userId);
     }
 
 }
