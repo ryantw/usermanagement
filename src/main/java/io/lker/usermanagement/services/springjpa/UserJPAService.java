@@ -30,8 +30,8 @@ public class UserJPAService implements UserService {
     }
 
     @Override
-    public List<User> findAllByLastName(String lastName) {
-        return userRepository.findAllByLastName(lastName);
+    public List<User> findAllByLastNameLike(String lastName) {
+        return userRepository.findAllByLastNameLike(lastName);
     }
 
     @Override

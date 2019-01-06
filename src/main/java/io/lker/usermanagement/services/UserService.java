@@ -8,7 +8,7 @@ public interface UserService extends CrudService<User, Long> {
 
     User findByLastName(String lastName);
     User findByFirstName(String firstName);
-    List<User> findAllByLastName(String lastName);
+    List<User> findAllByLastNameLike(String lastName);
     List<User> findAllByFirstName(String firstName);
 
 }
