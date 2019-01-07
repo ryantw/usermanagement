@@ -3,6 +3,7 @@ package io.lker.usermanagement.services.springjpa;
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.repositories.UserRepository;
 import io.lker.usermanagement.services.UserService;
+import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -48,7 +49,8 @@ public class UserJPAService implements UserService {
 
     @Override
     public User findById(Long aLong) {
-        return userRepository.findById(aLong).orElse(null);
+        return userRepository.findById(aLong)
+                .orElseThrow(() -> new UserNotFoundException(aLong));
     }
 
     @Override

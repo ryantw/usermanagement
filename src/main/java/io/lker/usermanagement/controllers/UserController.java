@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RequestMapping("/admin/users")
@@ -31,6 +32,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/{userId}")
+    public User getUserDetailsById(@PathVariable("userId") Long userId){
+        return userService.findById(userId);
+    }
+
     @GetMapping("/find/{lastName}")
     public Set<User> findByLastNameLike(@PathVariable("lastName") String lastName){
         Set<User> returnSet = new HashSet<>();
@@ -49,11 +55,6 @@ public class UserController {
             results.stream().forEach(returnSet::add);
             return returnSet;
         }
-    }
-
-    @GetMapping("/{userId}")
-    public User getUserDetailsById(@PathVariable("userId") Long userId){
-        return userService.findById(userId);
     }
 
 }
