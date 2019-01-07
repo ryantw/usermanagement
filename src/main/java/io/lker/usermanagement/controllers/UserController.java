@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 @RestController
 public class UserController {
 
@@ -26,7 +26,7 @@ public class UserController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public Set<User> findAllUsers(){
         return userService.findAll();
     }

@@ -49,7 +49,7 @@ class UserControllerTest {
     @Test
     void findAllUsers() throws Exception {
         when(userService.findAll()).thenReturn(users);
-        MvcResult result = mockMvc.perform(get("/users/findAll")).andReturn();
+        MvcResult result = mockMvc.perform(get("/admin/users")).andReturn();
         List<User> returnedUsers = TestUtils.jsonToList(result.getResponse().getContentAsString(), new TypeToken<ArrayList<User>>(){});
         assertNotNull(returnedUsers);
         assertEquals(2, returnedUsers.size());
@@ -59,7 +59,7 @@ class UserControllerTest {
     void getUserDetailsById() throws Exception {
         User user = User.builder().id(1L).firstName("Test").lastName("User").build();
         when(userService.findById(anyLong())).thenReturn(user);
-        MvcResult result = mockMvc.perform(get("/users/1")).andReturn();
+        MvcResult result = mockMvc.perform(get("/admin/users/1")).andReturn();
         User jsonUser = TestUtils.jsonToObject(result.getResponse().getContentAsString(), User.class);
         assertNotNull(jsonUser);
         assertEquals(1L, jsonUser.getId().longValue());
