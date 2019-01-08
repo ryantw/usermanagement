@@ -39,21 +39,19 @@ public class UserController {
 
     @GetMapping("/find/{lastName}")
     public Set<User> findByLastNameLike(@PathVariable("lastName") String lastName){
-        Set<User> returnSet = new HashSet<>();
+        //Set<User> returnSet = new HashSet<>();
         if(lastName == null)
             return null;
 
-        List<User> results = userService.findAllByLastNameLike("%" + lastName + "%");
+        Set<User> results = userService.findAllByLastNameLike(lastName);
 
         if(results.isEmpty()){
             //result.rejectValue("lastName", "notFound", "not found");
             return null;
         } else if (results.size() == 1){
-            returnSet.add(results.iterator().next());
-            return returnSet;
+            return results;
         } else {
-            results.stream().forEach(returnSet::add);
-            return returnSet;
+            return results;
         }
     }
 

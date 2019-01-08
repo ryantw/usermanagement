@@ -47,17 +47,26 @@ class UserJPAServiceTest {
     @Test
     void findByFirstName() {
         when(userRepository.findByFirstName(any())).thenReturn(returnUser);
-        assertEquals("Test", returnUser.getFirstName());
         userJPAService.findByFirstName("Test");
+        assertEquals("Test", returnUser.getFirstName());
         verify(userRepository).findByFirstName(any());
     }
 
     @Test
-    void findAllByLastName() {
+    void findAllByLastNameLike() {
+        // Returns 3 obv, need to find a way to stream out Smith
+        Set<User> users = new HashSet<>();
+        users.add(User.builder().id(1L).firstName("Ronald").lastName("McDonald").build());
+        users.add(User.builder().id(2L).firstName("Ruddy").lastName("McDonald").build());
+        users.add(User.builder().id(3L).firstName("Joe").lastName("Smith").build());
+        when(userRepository.findAllByLastNameLike(any())).thenReturn(users);
+        Set<User> returnedUsers = userJPAService.findAllByLastNameLike("Smith");
+        //assertEquals(1, returnedUsers.size());
     }
 
     @Test
-    void findAllByFirstName() {
+    void findAllByFirstNameLike() {
+
     }
 
     @Test

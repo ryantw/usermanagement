@@ -31,13 +31,13 @@ public class UserJPAService implements UserService {
     }
 
     @Override
-    public List<User> findAllByLastNameLike(String lastName) {
-        return userRepository.findAllByLastNameLike(lastName);
+    public Set<User> findAllByLastNameLike(String lastName) {
+        return userRepository.findAllByLastNameLike("%" + lastName + "%");
     }
 
     @Override
-    public List<User> findAllByFirstName(String firstName) {
-        return userRepository.findAllByFirstName(firstName);
+    public List<User> findAllByFirstNameLike(String firstName) {
+        return userRepository.findAllByFirstNameLike(firstName);
     }
 
     @Override
