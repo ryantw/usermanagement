@@ -31,6 +31,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -112,7 +113,7 @@ class UserControllerTest {
 
     @Test
     void testDeleteSingleUser() throws Exception{
-        mockMvc.perform(post("/admin/users/delete/1"))
+        mockMvc.perform(delete("/admin/users/delete/1"))
                 .andExpect(status().isOk());
         verify(userService, times(1)).deleteById(anyLong());
 
