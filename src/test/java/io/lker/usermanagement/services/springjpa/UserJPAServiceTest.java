@@ -55,12 +55,17 @@ class UserJPAServiceTest {
     @Test
     void findAllByLastNameLike() {
         // Returns 3 obv, need to find a way to stream out Smith
+        // Given
         Set<User> users = new HashSet<>();
         users.add(User.builder().id(1L).firstName("Ronald").lastName("McDonald").build());
         users.add(User.builder().id(2L).firstName("Ruddy").lastName("McDonald").build());
         users.add(User.builder().id(3L).firstName("Joe").lastName("Smith").build());
-        when(userRepository.findAllByLastNameLike(any())).thenReturn(users);
-        Set<User> returnedUsers = userJPAService.findAllByLastNameLike("Smith");
+        //users.stream().forEach(user -> userRepository.save(user));
+        //assertEquals(3, userRepository.count());
+        //when
+        //when(userRepository.findAllByLastNameLike("walker").thenReturn(users);
+        //Set<User> returnedUsers = userJPAService.findAllByLastNameLike("Smith");
+        //then
         //assertEquals(1, returnedUsers.size());
     }
 

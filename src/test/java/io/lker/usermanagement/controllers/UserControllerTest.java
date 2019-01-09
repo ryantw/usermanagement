@@ -15,13 +15,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.security.acl.Owner;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {
@@ -64,6 +73,21 @@ class UserControllerTest {
         assertNotNull(jsonUser);
         assertEquals(1L, jsonUser.getId().longValue());
         assertEquals("Test", jsonUser.getFirstName());
+    }
+
+    @Test
+    void findByLastNameLike() throws Exception {
+        User users = User.builder().id(10L).lastName("Walker").build();
+        Set<User> userSet = new HashSet<>();
+        userSet.add(users);
+        when(userService.findAllByLastNameLike(anyString())).thenReturn(userSet);
+        mockMvc.perform(get("/admin/users/find/Walker"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].lastName", is(users.getLastName())));
+
+        //Set<User> returnedUsers = userService.findAllByLastNameLike("Walker");
+        //assertEquals(2, returnedUsers.size());
 
     }
 }
