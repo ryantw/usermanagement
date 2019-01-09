@@ -28,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -106,6 +108,13 @@ class UserControllerTest {
                 //.andExpect(jsonPath("$[0].id", is(15L)));
 
         //then
+    }
+
+    @Test
+    void testDeleteSingleUser() throws Exception{
+        mockMvc.perform(post("/admin/users/delete/1"))
+                .andExpect(status().isOk());
+        verify(userService, times(1)).deleteById(anyLong());
 
     }
 }

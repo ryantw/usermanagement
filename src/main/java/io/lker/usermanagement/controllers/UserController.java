@@ -56,4 +56,9 @@ public class UserController {
         }
     }
 
+    @PostMapping("/delete/{userId}")
+    void deleteSingleUser(@PathVariable Long userId){
+        userService.deleteById(userId);
+    }
+
 }
