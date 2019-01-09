@@ -5,9 +5,6 @@ import io.lker.usermanagement.services.springjpa.UserJPAService;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RequestMapping("/admin/users")
@@ -32,14 +29,18 @@ public class UserController {
         return userService.findAll();
     }
 
+    @PostMapping
+    public User save(@RequestBody User user){
+        return userService.save(user);
+    }
+
     @GetMapping("/{userId}")
-    public User getUserDetailsById(@PathVariable("userId") Long userId){
+    public User getUserDetailsById(@PathVariable Long userId){
         return userService.findById(userId);
     }
 
     @GetMapping("/find/{lastName}")
-    public Set<User> findByLastNameLike(@PathVariable("lastName") String lastName){
-        //Set<User> returnSet = new HashSet<>();
+    public Set<User> findByLastNameLike(@PathVariable String lastName){
         if(lastName == null)
             return null;
 

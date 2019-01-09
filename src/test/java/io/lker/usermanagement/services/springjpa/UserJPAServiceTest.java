@@ -77,8 +77,8 @@ class UserJPAServiceTest {
     @Test
     void findAll() {
         Set<User> users = new HashSet<>();
-        users.add(User.builder().id(1L).build());
-        users.add(User.builder().id(2L).build());
+        users.add(User.builder().id(1L).firstName("Rye").build());
+        users.add(User.builder().id(2L).firstName("Bread").build());
         when(userRepository.findAll()).thenReturn(users);
 
         Set<User> returnedUsers = userJPAService.findAll();

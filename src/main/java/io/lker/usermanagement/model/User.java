@@ -1,17 +1,13 @@
 package io.lker.usermanagement.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users_manage")
+@Table(name = "users")
 public class User extends BaseEntity {
 
     @Builder
