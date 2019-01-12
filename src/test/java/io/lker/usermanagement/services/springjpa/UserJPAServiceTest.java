@@ -2,6 +2,7 @@ package io.lker.usermanagement.services.springjpa;
 
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.repositories.UserRepository;
+import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,10 +11,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,10 +56,6 @@ class UserJPAServiceTest {
         //assertEquals(1, returnedUsers.size());
     }
 
-    @Test
-    void findAllByFirstNameLike() {
-
-    }
 
     @Test
     void findAll() {
@@ -74,6 +73,13 @@ class UserJPAServiceTest {
 
     @Test
     void findById() {
+        Optional<User> optU = Optional.of(returnUser);
+        when(userRepository.findById(anyLong())).thenReturn(optU);
+        User returnedUser = userJPAService.findById(1L);
+        assertNotNull(returnedUser);
+        verify(userRepository, times(1)).findById(anyLong());
+
+
     }
 
     @Test
@@ -86,10 +92,18 @@ class UserJPAServiceTest {
     }
 
     @Test
-    void delete() {
+    void getRecipeByIdNotFound(){
+        assertThrows(UserNotFoundException.class,
+                ()->{
+                    User notFound = User.builder().id(8L).build();
+                    userJPAService.findById(notFound.getId());
+                });
     }
 
     @Test
     void deleteById() {
+        Long idToDelete = Long.valueOf(1L);
+        userJPAService.deleteById(idToDelete);
+        verify(userRepository, times(1)).deleteById(anyLong());
     }
 }
