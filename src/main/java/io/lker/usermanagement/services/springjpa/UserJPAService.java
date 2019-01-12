@@ -7,7 +7,6 @@ import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -21,23 +20,8 @@ public class UserJPAService implements UserService {
     }
 
     @Override
-    public User findByLastName(String lastName) {
-        return userRepository.findByLastName(lastName);
-    }
-
-    @Override
-    public User findByFirstName(String firstName) {
-        return userRepository.findByFirstName(firstName);
-    }
-
-    @Override
     public Set<User> findAllByLastNameLike(String lastName) {
         return userRepository.findAllByLastNameLike("%" + lastName + "%");
-    }
-
-    @Override
-    public List<User> findAllByFirstNameLike(String firstName) {
-        return userRepository.findAllByFirstNameLike(firstName);
     }
 
     @Override

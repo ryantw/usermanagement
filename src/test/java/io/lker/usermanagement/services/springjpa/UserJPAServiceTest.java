@@ -37,22 +37,6 @@ class UserJPAServiceTest {
     }
 
     @Test
-    void findByLastName() {
-        when(userRepository.findByLastName(any())).thenReturn(returnUser);
-        assertEquals("User", returnUser.getLastName());
-        userJPAService.findByLastName("User");
-        verify(userRepository).findByLastName(any());
-    }
-
-    @Test
-    void findByFirstName() {
-        when(userRepository.findByFirstName(any())).thenReturn(returnUser);
-        userJPAService.findByFirstName("Test");
-        assertEquals("Test", returnUser.getFirstName());
-        verify(userRepository).findByFirstName(any());
-    }
-
-    @Test
     void findAllByLastNameLike() {
         // Returns 3 obv, need to find a way to stream out Smith
         // Given
