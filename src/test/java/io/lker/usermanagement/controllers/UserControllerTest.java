@@ -2,7 +2,6 @@ package io.lker.usermanagement.controllers;
 
 import com.google.gson.reflect.TypeToken;
 import io.lker.usermanagement.model.User;
-import io.lker.usermanagement.services.UserService;
 import io.lker.usermanagement.services.springjpa.UserJPAService;
 import io.lker.usermanagement.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.security.acl.Owner;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,7 +58,7 @@ class UserControllerTest {
     @Test
     void findAllUsers() throws Exception {
         when(userService.findAll()).thenReturn(users);
-        MvcResult result = mockMvc.perform(get("/admin/users")).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/admin/users")).andReturn();
         List<User> returnedUsers = TestUtils.jsonToList(result.getResponse().getContentAsString(), new TypeToken<ArrayList<User>>(){});
         assertNotNull(returnedUsers);
         assertEquals(2, returnedUsers.size());
@@ -73,7 +68,7 @@ class UserControllerTest {
     void getUserDetailsById() throws Exception {
         User user = User.builder().id(1L).firstName("Test").lastName("User").build();
         when(userService.findById(anyLong())).thenReturn(user);
-        MvcResult result = mockMvc.perform(get("/admin/users/1")).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/admin/users/1")).andReturn();
         User jsonUser = TestUtils.jsonToObject(result.getResponse().getContentAsString(), User.class);
         assertNotNull(jsonUser);
         assertEquals(1L, jsonUser.getId().longValue());
@@ -86,7 +81,7 @@ class UserControllerTest {
         Set<User> userSet = new HashSet<>();
         userSet.add(users);
         when(userService.findAllByLastNameLike(anyString())).thenReturn(userSet);
-        mockMvc.perform(get("/admin/users/find/Walker"))
+        mockMvc.perform(get("/api/admin/users/search/Walker"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].lastName", is(users.getLastName())));
@@ -101,7 +96,7 @@ class UserControllerTest {
         User user = User.builder().id(15L).build();
         String jsonUser = TestUtils.objectToJson(user);
         //when
-        mockMvc.perform(post("/admin/users")
+        mockMvc.perform(post("/api/admin/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonUser))
                 .andExpect(status().isOk());
@@ -113,7 +108,7 @@ class UserControllerTest {
 
     @Test
     void testDeleteSingleUser() throws Exception{
-        mockMvc.perform(delete("/admin/users/delete/1"))
+        mockMvc.perform(delete("/api/admin/users/1"))
                 .andExpect(status().isOk());
         verify(userService, times(1)).deleteById(anyLong());
 

@@ -2,12 +2,13 @@ package io.lker.usermanagement.controllers;
 
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.springjpa.UserJPAService;
+import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@RequestMapping("/admin/users")
+@RequestMapping("/api/admin/users")
 @RestController
 public class UserController {
 
@@ -17,8 +18,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Disallow field of ID to be altered
-    // via forms/requests
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder){
         dataBinder.setDisallowedFields("id");
@@ -39,7 +38,25 @@ public class UserController {
         return userService.findById(userId);
     }
 
-    @GetMapping("/find/{lastName}")
+    @DeleteMapping("/{userId}")
+    void deleteSingleUser(@PathVariable Long userId){
+        userService.deleteById(userId);
+    }
+
+    @PutMapping("/{userId}")
+    public User replaceUser(@RequestBody User newUser, @PathVariable Long userId){
+        try {
+            User user = userService.findById(userId);
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
+            user.setEmailAddress(newUser.getEmailAddress());
+            return userService.save(user);
+        } catch (UserNotFoundException e){
+            return userService.save(newUser);
+        }
+    }
+
+    @GetMapping("/search/{lastName}")
     public Set<User> findByLastNameLike(@PathVariable String lastName){
         if(lastName == null)
             return null;
@@ -54,11 +71,6 @@ public class UserController {
         } else {
             return results;
         }
-    }
-
-    @DeleteMapping("/delete/{userId}")
-    void deleteSingleUser(@PathVariable Long userId){
-        userService.deleteById(userId);
     }
 
 }
