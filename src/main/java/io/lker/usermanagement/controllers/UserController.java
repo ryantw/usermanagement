@@ -3,6 +3,7 @@ package io.lker.usermanagement.controllers;
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.springjpa.UserJPAService;
 import io.lker.usermanagement.util.exceptions.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @RequestMapping("/api/admin/users")
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
+@Slf4j
 public class UserController {
 
     private final UserJPAService userService;
@@ -31,6 +33,7 @@ public class UserController {
 
     @PostMapping
     public User save(@RequestBody User user){
+        log.info("SAVING NEW USER");
         return userService.save(user);
     }
 
@@ -41,11 +44,13 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     void deleteSingleUser(@PathVariable Long userId){
+        log.info("Deleting USER_ID: " + userId);
         userService.deleteById(userId);
     }
 
     @PutMapping("/{userId}")
     public User replaceUser(@RequestBody User newUser, @PathVariable Long userId){
+        log.info("Replacing/New User: " + userId);
         try {
             User user = userService.findById(userId);
             user.setFirstName(newUser.getFirstName());
