@@ -12,11 +12,12 @@ public class User extends BaseEntity {
 
     @Builder
     public User(Long id, String firstName, String lastName,
-                String emailAddress, Roles roles){
+                String emailAddress, String password, Roles roles){
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+        this.password = password;
         this.roles = roles;
     }
 
@@ -28,6 +29,9 @@ public class User extends BaseEntity {
 
     @Column(name = "emailAddress")
     private String emailAddress;
+
+    @Column(name = "password")
+    private String password;
 
     @Enumerated(value = EnumType.STRING)
     private Roles roles;

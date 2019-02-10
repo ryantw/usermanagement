@@ -25,6 +25,11 @@ public class UserJPAService implements UserService {
     }
 
     @Override
+    public User findByEmailAddress(String email) {
+        return userRepository.findByEmailAddress("%" + email + "%");
+    }
+
+    @Override
     public Set<User> findAll() {
         Set<User> users = new HashSet<>();
         userRepository.findAll().forEach(users::add);

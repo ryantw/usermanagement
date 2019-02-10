@@ -8,5 +8,6 @@ import java.util.Set;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     Set<User> findAllByLastNameLike(String lastName);
+    User findByEmailAddress(String email);
 
 }
