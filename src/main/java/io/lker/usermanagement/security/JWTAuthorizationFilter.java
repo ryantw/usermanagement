@@ -2,6 +2,9 @@ package io.lker.usermanagement.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +21,7 @@ import static io.lker.usermanagement.security.SecurityConstants.HEADER_STRING;
 import static io.lker.usermanagement.security.SecurityConstants.SECRET;
 import static io.lker.usermanagement.security.SecurityConstants.TOKEN_PREFIX;
 
+@Slf4j
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -45,13 +49,18 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
         String token = request.getHeader(HEADER_STRING);
         if(token != null){
-            String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX,""))
-                    .getSubject();
+            try {
+                String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+                        .build()
+                        .verify(token.replace(TOKEN_PREFIX, ""))
+                        .getSubject();
 
-            if(user != null){
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                if (user != null) {
+                    return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                }
+            } catch (JWTDecodeException | SignatureVerificationException e){
+                log.warn("Invalid Token");
+                return null;
             }
 
             return null;
