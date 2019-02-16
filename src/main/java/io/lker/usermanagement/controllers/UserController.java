@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 @RestController
 @Slf4j
 public class UserController {
