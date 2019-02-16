@@ -58,8 +58,6 @@ public class UserAuthentication {
         String jws = tokenHelper.generateToken(user.getUsername());
         long expiresIn = SecurityConstants.EXPIRATION_DATE;
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
-
-
     }
 
     @PostMapping("/sign-up")
