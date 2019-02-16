@@ -1,6 +1,6 @@
 package io.lker.usermanagement.bootstrap;
 
-import io.lker.usermanagement.model.Roles;
+import io.lker.usermanagement.model.Authority;
 import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +27,7 @@ public class StartUpData implements CommandLineRunner {
         User user1 = User.builder().id(1L).firstName("Ryan").lastName("Walker")
                 .emailAddress("ryanwalker@example.com")
                 .password(bCryptPasswordEncoder.encode("test"))
-                .roles(Roles.ADMIN).build();
+                .build();
         User user2 = User.builder().id(2L).firstName("Alicia").lastName("Walker")
                 .emailAddress("aliciawalker@example.com").build();
         User user3 = User.builder().id(3L).firstName("Landon").lastName("Gavin")

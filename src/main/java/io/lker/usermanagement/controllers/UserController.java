@@ -4,6 +4,7 @@ import io.lker.usermanagement.model.User;
 import io.lker.usermanagement.services.springjpa.UserJPAService;
 import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Set<User> findAllUsers(){
         return userService.findAll();
     }

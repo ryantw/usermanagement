@@ -56,4 +56,5 @@ public class UserJPAService implements UserService {
     public void deleteById(Long aLong) {
         userRepository.deleteById(aLong);
     }
+
 }
