@@ -87,12 +87,12 @@ public class TokenHelper {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){
-        User user = (User) userDetails;
+        //User user = (User) userDetails;
         final String email = getEmailFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         // todo
         // validate created before last password reset
-        return ( email != null && email.equals(user.getEmailAddress()));
+        return ( email != null && email.equals(userDetails.getUsername()));
     }
 
     private Date generateExpirationDate(){

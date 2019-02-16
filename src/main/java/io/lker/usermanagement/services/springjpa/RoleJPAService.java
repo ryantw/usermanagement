@@ -45,4 +45,10 @@ public class RoleJPAService implements RoleService {
     public void deleteById(Long aLong) {
         roleRepository.deleteById(aLong);
     }
+
+
+    @Override
+    public Role findByRoleName(String name) {
+        return roleRepository.findByRoleName(name);
+    }
 }

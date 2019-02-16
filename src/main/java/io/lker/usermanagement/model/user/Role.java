@@ -1,8 +1,10 @@
 package io.lker.usermanagement.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -18,8 +20,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private String roleName;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
-    private Set<User> users;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
 }

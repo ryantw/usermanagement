@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,14 +32,25 @@ public class StartUpData implements CommandLineRunner {
     }
 
     private void loadData(){
+        Role adminRole = roleService.findByRoleName("ROLE_ADMIN");
+
+        if(adminRole == null){
+            roleService.save(Role.builder().roleName("ROLE_ADMIN").build());
+        }
+
+        adminRole = roleService.findByRoleName("ROLE_ADMIN");
+
+
         User user1 = User.builder().id(1L).firstName("Ryan").lastName("Walker")
                 .emailAddress("ryanwalker@example.com")
                 .password(bCryptPasswordEncoder.encode("test"))
+                .roles(Arrays.asList(adminRole))
                 .build();
         User user2 = User.builder().id(2L).firstName("Alicia").lastName("Walker")
                 .emailAddress("aliciawalker@example.com").build();
         User user3 = User.builder().id(3L).firstName("Landon").lastName("Gavin")
                 .emailAddress("landongavin@example.com")
+                .roles(Arrays.asList(adminRole))
                 .password(bCryptPasswordEncoder.encode("test")).build();
         User user4 = User.builder().id(4L).firstName("Nick").lastName("Schlenk")
                 .emailAddress("nickschlenk@example.com").build();
@@ -48,19 +60,6 @@ public class StartUpData implements CommandLineRunner {
                 .emailAddress("barbaragavin@example.com").build();
         User user7 = User.builder().id(7L).firstName("Vince").lastName("Stratful")
                 .emailAddress("vstrat@gmail.com").build();
-
-        userService.save(user1);
-        userService.save(user3);
-
-        Set<User> adminUsers = new HashSet<>();
-        adminUsers.add(user1);
-        adminUsers.add(user3);
-
-        Role role = Role.builder().name("ROLE_ADMIN").users(adminUsers).build();
-        roleService.save(role);
-
-        user1.setRoles(roleService.findAll());
-        user3.setRoles(roleService.findAll());
 
         userService.save(user1);
         userService.save(user2);

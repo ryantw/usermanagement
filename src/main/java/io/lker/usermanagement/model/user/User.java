@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -15,12 +16,13 @@ public class User extends BaseEntity {
 
     @Builder
     public User(Long id, String firstName, String lastName,
-                String emailAddress, String password){
+                String emailAddress, String password, Collection<Role> roles){
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.roles = roles;
     }
 
     @Column(name = "firstName")
@@ -35,10 +37,10 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name="role_id"))
-    private Set<Role> roles;
+    private Collection<Role> roles;
 
     // todo
     // do not hard code email/username as
