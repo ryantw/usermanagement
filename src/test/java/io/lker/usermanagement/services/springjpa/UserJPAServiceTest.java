@@ -1,6 +1,6 @@
 package io.lker.usermanagement.services.springjpa;
 
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 import io.lker.usermanagement.repositories.UserRepository;
 import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ class UserJPAServiceTest {
 
     @BeforeEach
     void setUp() {
-        returnUser = User.builder().id(1L).firstName("Test").lastName("User")
+        returnUser = User.builder().id(1L).firstName("Test").lastName("user")
                 .emailAddress("test@user.com")
                 .build();
     }
@@ -51,7 +51,7 @@ class UserJPAServiceTest {
         //assertEquals(3, userRepository.count());
         //when
         //when(userRepository.findAllByLastNameLike("walker").thenReturn(users);
-        //Set<User> returnedUsers = userJPAService.findAllByLastNameLike("Smith");
+        //Set<user> returnedUsers = userJPAService.findAllByLastNameLike("Smith");
         //then
         //assertEquals(1, returnedUsers.size());
     }

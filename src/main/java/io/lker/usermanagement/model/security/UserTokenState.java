@@ -1,4 +1,4 @@
-package io.lker.usermanagement.security.model;
+package io.lker.usermanagement.model.security;
 
 public class UserTokenState {
     private String access_token;

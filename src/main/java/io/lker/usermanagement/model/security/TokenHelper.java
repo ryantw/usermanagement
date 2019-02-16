@@ -1,8 +1,8 @@
-package io.lker.usermanagement.security.model;
+package io.lker.usermanagement.model.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 import io.lker.usermanagement.security.SecurityConstants;
 import io.lker.usermanagement.util.TimeProvider;
 import lombok.extern.slf4j.Slf4j;

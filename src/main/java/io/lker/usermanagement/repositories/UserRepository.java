@@ -1,6 +1,6 @@
 package io.lker.usermanagement.repositories;
 
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Set;

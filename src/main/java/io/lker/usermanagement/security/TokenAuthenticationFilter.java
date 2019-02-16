@@ -1,6 +1,6 @@
 package io.lker.usermanagement.security;
 
-import io.lker.usermanagement.security.model.TokenHelper;
+import io.lker.usermanagement.model.security.TokenHelper;
 import io.lker.usermanagement.services.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;

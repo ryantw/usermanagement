@@ -1,6 +1,7 @@
 package io.lker.usermanagement.services.springjpa;
 
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
+import io.lker.usermanagement.repositories.RoleRepository;
 import io.lker.usermanagement.repositories.UserRepository;
 import io.lker.usermanagement.services.UserService;
 import io.lker.usermanagement.util.exceptions.UserNotFoundException;
@@ -13,10 +14,11 @@ import java.util.Set;
 public class UserJPAService implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    // Constructor injection
-    public UserJPAService(UserRepository userRepository) {
+    public UserJPAService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -44,6 +46,7 @@ public class UserJPAService implements UserService {
 
     @Override
     public User save(User object) {
+        //object.setRoles(new HashSet<>(roleRepository.findAll()));
         return userRepository.save(object);
     }
 

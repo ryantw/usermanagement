@@ -1,10 +1,10 @@
 package io.lker.usermanagement.controllers;
 
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 import io.lker.usermanagement.security.SecurityConstants;
-import io.lker.usermanagement.security.model.JwtAuthenticationRequest;
-import io.lker.usermanagement.security.model.TokenHelper;
-import io.lker.usermanagement.security.model.UserTokenState;
+import io.lker.usermanagement.model.security.JwtAuthenticationRequest;
+import io.lker.usermanagement.model.security.TokenHelper;
+import io.lker.usermanagement.model.security.UserTokenState;
 import io.lker.usermanagement.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -52,8 +51,11 @@ public class UserAuthentication {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        User user = (User) authentication.getPrincipal();
-        String jws = tokenHelper.generateToken(user.getEmailAddress());
+
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+
+        String jws = tokenHelper.generateToken(user.getUsername());
         long expiresIn = SecurityConstants.EXPIRATION_DATE;
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
 

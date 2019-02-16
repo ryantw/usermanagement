@@ -1,6 +1,6 @@
 package io.lker.usermanagement.services;
 
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 
 import java.util.Set;
 

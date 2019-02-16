@@ -1,7 +1,7 @@
 package io.lker.usermanagement.controllers;
 
 import com.google.gson.reflect.TypeToken;
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 import io.lker.usermanagement.services.springjpa.UserJPAService;
 import io.lker.usermanagement.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,7 +66,7 @@ class UserControllerTest {
 
     @Test
     void getUserDetailsById() throws Exception {
-        User user = User.builder().id(1L).firstName("Test").lastName("User").build();
+        User user = User.builder().id(1L).firstName("Test").lastName("user").build();
         when(userService.findById(anyLong())).thenReturn(user);
         MvcResult result = mockMvc.perform(get("/api/admin/users/1")).andReturn();
         User jsonUser = TestUtils.jsonToObject(result.getResponse().getContentAsString(), User.class);
@@ -86,7 +86,7 @@ class UserControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].lastName", is(users.getLastName())));
 
-        //Set<User> returnedUsers = userService.findAllByLastNameLike("Walker");
+        //Set<user> returnedUsers = userService.findAllByLastNameLike("Walker");
         //assertEquals(2, returnedUsers.size());
     }
 

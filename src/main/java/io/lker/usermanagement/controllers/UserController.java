@@ -1,6 +1,6 @@
 package io.lker.usermanagement.controllers;
 
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.User;
 import io.lker.usermanagement.services.springjpa.UserJPAService;
 import io.lker.usermanagement.util.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public User replaceUser(@RequestBody User newUser, @PathVariable Long userId){
-        log.info("Replacing/New User: " + userId);
+        log.info("Replacing/New user: " + userId);
         try {
             User user = userService.findById(userId);
             user.setFirstName(newUser.getFirstName());

@@ -1,4 +1,4 @@
-package io.lker.usermanagement.model;
+package io.lker.usermanagement.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

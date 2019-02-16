@@ -1,20 +1,27 @@
 package io.lker.usermanagement.bootstrap;
 
-import io.lker.usermanagement.model.Authority;
-import io.lker.usermanagement.model.User;
+import io.lker.usermanagement.model.user.Role;
+import io.lker.usermanagement.model.user.User;
+import io.lker.usermanagement.services.RoleService;
 import io.lker.usermanagement.services.UserService;
+import io.lker.usermanagement.services.springjpa.RoleJPAService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class StartUpData implements CommandLineRunner {
 
     private final UserService userService;
+    private final RoleJPAService roleService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public StartUpData(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public StartUpData(UserService userService, RoleJPAService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
+        this.roleService = roleService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -41,6 +48,19 @@ public class StartUpData implements CommandLineRunner {
                 .emailAddress("barbaragavin@example.com").build();
         User user7 = User.builder().id(7L).firstName("Vince").lastName("Stratful")
                 .emailAddress("vstrat@gmail.com").build();
+
+        userService.save(user1);
+        userService.save(user3);
+
+        Set<User> adminUsers = new HashSet<>();
+        adminUsers.add(user1);
+        adminUsers.add(user3);
+
+        Role role = Role.builder().name("ROLE_ADMIN").users(adminUsers).build();
+        roleService.save(role);
+
+        user1.setRoles(roleService.findAll());
+        user3.setRoles(roleService.findAll());
 
         userService.save(user1);
         userService.save(user2);
