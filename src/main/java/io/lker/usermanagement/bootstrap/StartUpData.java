@@ -2,7 +2,6 @@ package io.lker.usermanagement.bootstrap;
 
 import io.lker.usermanagement.model.user.Role;
 import io.lker.usermanagement.model.user.User;
-import io.lker.usermanagement.services.RoleService;
 import io.lker.usermanagement.services.UserService;
 import io.lker.usermanagement.services.springjpa.RoleJPAService;
 import org.springframework.boot.CommandLineRunner;
@@ -10,8 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class StartUpData implements CommandLineRunner {
@@ -55,7 +52,9 @@ public class StartUpData implements CommandLineRunner {
         User user4 = User.builder().id(4L).firstName("Nick").lastName("Schlenk")
                 .emailAddress("nickschlenk@example.com").build();
         User user5 = User.builder().id(5L).firstName("Luke").lastName("Walker")
-                .emailAddress("lukewalker@example.com").build();
+                .emailAddress("lukewalker@example.com")
+                .password(bCryptPasswordEncoder.encode("test"))
+                .build();
         User user6 = User.builder().id(6L).firstName("Barbara").lastName("Gavin")
                 .emailAddress("barbaragavin@example.com").build();
         User user7 = User.builder().id(7L).firstName("Vince").lastName("Stratful")

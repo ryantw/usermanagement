@@ -58,7 +58,7 @@ class UserControllerTest {
     @Test
     void findAllUsers() throws Exception {
         when(userService.findAll()).thenReturn(users);
-        MvcResult result = mockMvc.perform(get("/api/admin/users")).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/users")).andReturn();
         List<User> returnedUsers = TestUtils.jsonToList(result.getResponse().getContentAsString(), new TypeToken<ArrayList<User>>(){});
         assertNotNull(returnedUsers);
         assertEquals(2, returnedUsers.size());
@@ -68,7 +68,7 @@ class UserControllerTest {
     void getUserDetailsById() throws Exception {
         User user = User.builder().id(1L).firstName("Test").lastName("user").build();
         when(userService.findById(anyLong())).thenReturn(user);
-        MvcResult result = mockMvc.perform(get("/api/admin/users/1")).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/users/1")).andReturn();
         User jsonUser = TestUtils.jsonToObject(result.getResponse().getContentAsString(), User.class);
         assertNotNull(jsonUser);
         assertEquals(1L, jsonUser.getId().longValue());
@@ -81,7 +81,7 @@ class UserControllerTest {
         Set<User> userSet = new HashSet<>();
         userSet.add(users);
         when(userService.findAllByLastNameLike(anyString())).thenReturn(userSet);
-        mockMvc.perform(get("/api/admin/users/search/Walker"))
+        mockMvc.perform(get("/api/users/search/Walker"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].lastName", is(users.getLastName())));
@@ -96,7 +96,7 @@ class UserControllerTest {
         User user = User.builder().id(15L).build();
         String jsonUser = TestUtils.objectToJson(user);
         //when
-        mockMvc.perform(post("/api/admin/users")
+        mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonUser))
                 .andExpect(status().isOk());
@@ -108,7 +108,7 @@ class UserControllerTest {
 
     @Test
     void testDeleteSingleUser() throws Exception{
-        mockMvc.perform(delete("/api/admin/users/1"))
+        mockMvc.perform(delete("/api/users/1"))
                 .andExpect(status().isOk());
         verify(userService, times(1)).deleteById(anyLong());
 
