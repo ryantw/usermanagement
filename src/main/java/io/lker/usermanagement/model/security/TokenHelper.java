@@ -2,7 +2,6 @@ package io.lker.usermanagement.model.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.lker.usermanagement.model.user.User;
 import io.lker.usermanagement.security.SecurityConstants;
 import io.lker.usermanagement.util.TimeProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +20,16 @@ public class TokenHelper {
         this.timeProvider = timeProvider;
     }
 
-    public String getEmailFromToken(String token){
-        String email;
+    public String getUsernameFromToken(String token){
+        String username;
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
-            email = claims.getSubject();
+            username = claims.getSubject();
         } catch (Exception e){
-            email = null;
-            log.error("Email not found. "  + e.getMessage());
+            username = null;
+            log.error("username not found. "  + e.getMessage());
         }
-        return email;
+        return username;
     }
 
     private Date getIssuedAtDateFromToken(String token){
@@ -75,10 +74,10 @@ public class TokenHelper {
         return refreshedToken;
     }
 
-    public String generateToken(String email){
+    public String generateToken(String username){
         return Jwts.builder()
                 .setIssuer(SecurityConstants.APP_NAME)
-                .setSubject(email)
+                .setSubject(username)
                 .setAudience(SecurityConstants.AUDIENCE)
                 .setIssuedAt(TimeProvider.now())
                 .setExpiration(generateExpirationDate())
@@ -88,11 +87,11 @@ public class TokenHelper {
 
     public Boolean validateToken(String token, UserDetails userDetails){
         //User user = (User) userDetails;
-        final String email = getEmailFromToken(token);
+        final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         // todo
         // validate created before last password reset
-        return ( email != null && email.equals(userDetails.getUsername()));
+        return ( username != null && username.equals(userDetails.getUsername()));
     }
 
     private Date generateExpirationDate(){

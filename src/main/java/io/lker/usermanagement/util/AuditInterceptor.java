@@ -1,5 +1,6 @@
-package io.lker.usermanagement.services;
+package io.lker.usermanagement.util;
 
+import io.lker.usermanagement.model.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
@@ -30,8 +31,11 @@ public class AuditInterceptor implements PreInsertEventListener {
 
     @Override
     public boolean onPreInsert(PreInsertEvent preInsertEvent) {
-        log.info("TEST");
-        log.info(preInsertEvent.toString());
+        log.info(preInsertEvent.getEntityName());
+        if(preInsertEvent.getEntity() instanceof User){
+            User user = (User) preInsertEvent.getEntity();
+            log.info(user.getEmailAddress());
+        }
         return false;
     }
 }

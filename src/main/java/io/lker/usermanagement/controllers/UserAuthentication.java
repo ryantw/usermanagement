@@ -45,7 +45,7 @@ public class UserAuthentication {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getEmail(),
+                        authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()
                 )
         );
