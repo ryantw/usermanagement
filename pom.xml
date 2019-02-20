@@ -5,6 +5,7 @@
     <modules>
         <module>usermanagement</module>
         <module>web</module>
+        <module>products</module>
     </modules>
     <packaging>pom</packaging>
     <parent>
