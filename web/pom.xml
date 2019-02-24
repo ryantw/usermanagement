@@ -12,7 +12,7 @@
     <artifactId>web</artifactId>
     <dependencies>
         <dependency>
-            <artifactId>usermanagement</artifactId>
+            <artifactId>admin</artifactId>
             <groupId>io.lker.webstore</groupId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

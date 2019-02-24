@@ -9,17 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>products</artifactId>
+    <artifactId>admin</artifactId>
 
     <properties>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
 
-
     <dependencies>
         <dependency>
-            <artifactId>usermanagement</artifactId>
             <groupId>io.lker.webstore</groupId>
+            <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -80,6 +79,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

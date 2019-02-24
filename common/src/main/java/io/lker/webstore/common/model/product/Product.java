@@ -1,8 +1,8 @@
 package io.lker.webstore.common.model.product;
 
 import io.lker.webstore.common.model.user.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,19 +10,35 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Slf4j
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Builder
+    public Product(Long id, String name, Long groupedProduct, Long productQuantity,
+                   Set<ProductDescription> descriptions, Set<ProductSize> productSizes) {
+        super(id);
+        this.name = name;
+        this.groupedProduct = groupedProduct;
+        this.productQuantity = productQuantity;
+        this.descriptions = descriptions;
+        this.productSizes = productSizes;
+    }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+    private String name;
+
+    // Grouping products LIKE products
+    private Long groupedProduct;
+
+    private Long productQuantity;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductDescription> descriptions = new HashSet<ProductDescription>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
+    private Set<ProductSize> productSizes = new HashSet<>();
 
 }

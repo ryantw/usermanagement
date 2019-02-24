@@ -14,20 +14,24 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Slf4j
-public class ProductDescription extends BaseEntity {
+@Table(name = "product_sizes")
+public class ProductSize extends BaseEntity {
 
     @Builder
-    public ProductDescription(Long id, String description, Product product) {
+    public ProductSize(Long id, String name, String description, Product product){
         super(id);
+        this.name = name;
         this.description = description;
         this.product = product;
     }
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(targetEntity = Product.class)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
 }
