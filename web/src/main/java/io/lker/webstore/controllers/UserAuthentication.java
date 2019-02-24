@@ -1,11 +1,11 @@
 package io.lker.webstore.controllers;
 
-import io.lker.usermanagement.model.user.User;
-import io.lker.usermanagement.util.SecurityConstants;
-import io.lker.usermanagement.model.security.JwtAuthenticationRequest;
-import io.lker.usermanagement.model.security.TokenHelper;
-import io.lker.usermanagement.model.security.UserTokenState;
-import io.lker.usermanagement.services.UserService;
+import io.lker.webstore.common.model.user.User;
+import io.lker.webstore.usermanagement.util.SecurityConstants;
+import io.lker.webstore.usermanagement.model.security.JwtAuthenticationRequest;
+import io.lker.webstore.usermanagement.model.security.TokenHelper;
+import io.lker.webstore.usermanagement.model.security.UserTokenState;
+import io.lker.webstore.usermanagement.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

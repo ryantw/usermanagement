@@ -1,9 +1,9 @@
 package io.lker.webstore.controllers;
 
 import com.google.gson.reflect.TypeToken;
-import io.lker.usermanagement.model.user.User;
-import io.lker.usermanagement.services.springjpa.UserJPAService;
-import io.lker.usermanagement.util.TestUtils;
+import io.lker.webstore.common.model.user.User;
+import io.lker.webstore.usermanagement.services.springjpa.UserJPAService;
+import io.lker.webstore.usermanagement.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

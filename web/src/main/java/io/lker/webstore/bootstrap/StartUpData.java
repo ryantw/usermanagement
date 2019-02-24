@@ -1,9 +1,9 @@
 package io.lker.webstore.bootstrap;
 
-import io.lker.usermanagement.model.user.Role;
-import io.lker.usermanagement.model.user.User;
-import io.lker.usermanagement.services.UserService;
-import io.lker.usermanagement.services.springjpa.RoleJPAService;
+import io.lker.webstore.common.model.user.Role;
+import io.lker.webstore.common.model.user.User;
+import io.lker.webstore.usermanagement.services.UserService;
+import io.lker.webstore.usermanagement.services.springjpa.RoleJPAService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

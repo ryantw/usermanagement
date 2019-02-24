@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Slf4j
 @ComponentScan(basePackages = {"io.lker"})
 @SpringBootApplication
-@EnableJpaRepositories("io.lker.usermanagement.repositories")
-@EntityScan("io.lker.usermanagement.model")
+@EnableJpaRepositories("io.lker.webstore.usermanagement.repositories")
+@EntityScan("io.lker.webstore.usermanagement.model")
 public class UsermanagementApplication {
 
     @Bean

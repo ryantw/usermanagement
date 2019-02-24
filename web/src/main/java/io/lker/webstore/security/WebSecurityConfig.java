@@ -1,7 +1,7 @@
 package io.lker.webstore.security;
 
-import io.lker.usermanagement.model.security.TokenHelper;
-import io.lker.usermanagement.services.UserAuthService;
+import io.lker.webstore.usermanagement.model.security.TokenHelper;
+import io.lker.webstore.usermanagement.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

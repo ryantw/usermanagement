@@ -1,8 +1,8 @@
 package io.lker.webstore.controllers;
 
-import io.lker.usermanagement.model.user.User;
-import io.lker.usermanagement.services.springjpa.UserJPAService;
-import io.lker.usermanagement.util.exceptions.UserNotFoundException;
+import io.lker.webstore.common.model.user.User;
+import io.lker.webstore.usermanagement.services.springjpa.UserJPAService;
+import io.lker.webstore.usermanagement.util.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;

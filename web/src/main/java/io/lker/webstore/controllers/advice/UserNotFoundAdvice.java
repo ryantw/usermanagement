@@ -1,6 +1,6 @@
 package io.lker.webstore.controllers.advice;
 
-import io.lker.usermanagement.util.exceptions.UserNotFoundException;
+import io.lker.webstore.usermanagement.util.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
