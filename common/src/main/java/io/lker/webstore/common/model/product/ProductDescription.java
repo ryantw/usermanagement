@@ -1,7 +1,7 @@
 package io.lker.webstore.common.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.lker.webstore.common.model.user.BaseEntity;
+import io.lker.webstore.common.model.Description;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,17 +15,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Slf4j
-public class ProductDescription extends BaseEntity {
+@Table(name="product_descriptions")
+public class ProductDescription extends Description {
 
     @Builder
-    public ProductDescription(Long id, String description, Product product) {
-        super(id);
-        this.description = description;
+    public ProductDescription(Long id, String language, String name,
+                              String title, String description, Product product) {
+        super(id, language, name, title, description);
         this.product = product;
     }
-
-    @Column(name = "description")
-    private String description;
 
     @JsonIgnore
     @ManyToOne(targetEntity = Product.class)

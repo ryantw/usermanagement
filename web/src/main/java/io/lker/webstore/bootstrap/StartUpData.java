@@ -84,8 +84,8 @@ public class StartUpData implements CommandLineRunner {
         productSizes.add(productSize1);
 
         Set<ProductDescription> productDescriptions = new HashSet<>();
-        ProductDescription productDescription = ProductDescription.builder().id(1L).description("Sup G").build();
-        ProductDescription productDescription1 = ProductDescription.builder().id(2L).description("Sup W").build();
+        ProductDescription productDescription = ProductDescription.builder().id(1L).title("YES").description("Sup G").build();
+        ProductDescription productDescription1 = ProductDescription.builder().id(2L).title("YES").description("Sup W").build();
         productDescriptions.add(productDescription);
         productDescriptions.add(productDescription1);
 
@@ -109,8 +109,8 @@ public class StartUpData implements CommandLineRunner {
         productSizes2.add(productSize3);
 
         Set<ProductDescription> productDescriptions1 = new HashSet<>();
-        ProductDescription productDescription2 = ProductDescription.builder().id(3L).description("Goat").build();
-        ProductDescription productDescription3 = ProductDescription.builder().id(4L).description("Of All Time son!").build();
+        ProductDescription productDescription2 = ProductDescription.builder().id(3L).title("NO").description("Goat").build();
+        ProductDescription productDescription3 = ProductDescription.builder().id(4L).title("NO").description("Of All Time son!").build();
         productDescriptions1.add(productDescription2);
         productDescriptions1.add(productDescription3);
 
