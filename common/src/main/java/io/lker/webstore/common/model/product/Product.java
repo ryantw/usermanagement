@@ -35,6 +35,8 @@ public class Product extends BaseEntity {
 
     private Long productQuantity;
 
+    private boolean isFeatured;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductDescription> descriptions = new HashSet<ProductDescription>();
 
