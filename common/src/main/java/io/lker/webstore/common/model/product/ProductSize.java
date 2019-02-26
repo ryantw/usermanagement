@@ -1,5 +1,6 @@
 package io.lker.webstore.common.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.lker.webstore.common.model.user.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class ProductSize extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

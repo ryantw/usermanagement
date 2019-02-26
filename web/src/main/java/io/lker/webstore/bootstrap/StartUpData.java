@@ -101,5 +101,30 @@ public class StartUpData implements CommandLineRunner {
         sizeJPAService.save(productSize);
         sizeJPAService.save(productSize1);
 
+
+        ProductSize productSize2 = ProductSize.builder().id(3L).name("XXL").build();
+        ProductSize productSize3 = ProductSize.builder().id(4L).name("L").build();
+        Set<ProductSize> productSizes2 = new HashSet<>();
+        productSizes2.add(productSize2);
+        productSizes2.add(productSize3);
+
+        Set<ProductDescription> productDescriptions1 = new HashSet<>();
+        ProductDescription productDescription2 = ProductDescription.builder().id(3L).description("Goat").build();
+        ProductDescription productDescription3 = ProductDescription.builder().id(4L).description("Of All Time son!").build();
+        productDescriptions1.add(productDescription2);
+        productDescriptions1.add(productDescription3);
+
+
+        Product product1 = Product.builder().id(2L).groupedProduct(25L).name("Fire Beasts")
+                .productSizes(productSizes2).descriptions(productDescriptions1).build();
+
+        productDescription2.setProduct(product1);
+        productDescription3.setProduct(product1);
+        productSize2.setProduct(product1);
+        productSize3.setProduct(product1);
+        productJPAService.save(product1);
+        sizeJPAService.save(productSize2);
+        sizeJPAService.save(productSize3);
+
     }
 }
