@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Slf4j
-@Table(name="product_descriptions")
+@Table(name="product_description")
 public class ProductDescription extends Description {
 
     @Builder
