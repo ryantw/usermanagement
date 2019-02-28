@@ -1,14 +1,14 @@
 package io.lker.webstore.bootstrap;
 
+import io.lker.webstore.common.model.catalogue.Catalogue;
+import io.lker.webstore.common.model.catalogue.Category;
 import io.lker.webstore.common.model.product.Product;
 import io.lker.webstore.common.model.product.ProductDescription;
 import io.lker.webstore.common.model.product.ProductSize;
 import io.lker.webstore.common.model.user.Role;
 import io.lker.webstore.common.model.user.User;
 import io.lker.webstore.usermanagement.services.UserService;
-import io.lker.webstore.usermanagement.services.springjpa.ProductJPAService;
-import io.lker.webstore.usermanagement.services.springjpa.RoleJPAService;
-import io.lker.webstore.usermanagement.services.springjpa.SizeJPAService;
+import io.lker.webstore.usermanagement.services.springjpa.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,14 +24,19 @@ public class StartUpData implements CommandLineRunner {
     private final RoleJPAService roleService;
     private final ProductJPAService productJPAService;
     private final SizeJPAService sizeJPAService;
+    private final CatalogueJPAService catalogueJPAService;
+    private final CategoryJPAService categoryJPAService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public StartUpData(UserService userService, RoleJPAService roleService, BCryptPasswordEncoder bCryptPasswordEncoder,
-                       ProductJPAService productJPAService, SizeJPAService sizeJPAService) {
+    public StartUpData(UserService userService, RoleJPAService roleService, ProductJPAService productJPAService,
+                       SizeJPAService sizeJPAService, CatalogueJPAService catalogueJPAService,
+                       CategoryJPAService categoryJPAService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
-        this.sizeJPAService = sizeJPAService;
         this.productJPAService = productJPAService;
+        this.sizeJPAService = sizeJPAService;
+        this.catalogueJPAService = catalogueJPAService;
+        this.categoryJPAService = categoryJPAService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -41,6 +46,120 @@ public class StartUpData implements CommandLineRunner {
     }
 
     private void loadData(){
+        loadUserData();
+        loadStoreData();
+    }
+
+    private void loadStoreData(){
+
+        Catalogue catalogue = new Catalogue();
+        Category categoryPants = new Category();
+        Category categoryShirts = new Category();
+        Category onSale = new Category();
+
+        categoryPants.setCatalogue(catalogue);
+        categoryPants.setName("Pants");
+
+        categoryShirts.setCatalogue(catalogue);
+        categoryShirts.setName("Shirts");
+
+        onSale.setCatalogue(catalogue);
+        onSale.setName("On Sale");
+
+        catalogue.addCategory(categoryPants);
+        catalogue.addCategory(categoryShirts);
+        catalogue.addCategory(onSale);
+        catalogueJPAService.save(catalogue);
+        categoryJPAService.save(categoryPants);
+        categoryJPAService.save(categoryShirts);
+        categoryJPAService.save(onSale);
+
+        ProductSize productSize = ProductSize.builder().id(1L).name("0-6 Months").build();
+        sizeJPAService.save(productSize);
+        ProductSize productSize1 = ProductSize.builder().id(2L).name("14/16 Months").build();
+        sizeJPAService.save(productSize1);
+        Set<ProductSize> productSizes = new HashSet<>();
+        productSizes.add(productSize);
+        productSizes.add(productSize1);
+
+        Set<ProductDescription> productDescriptions = new HashSet<>();
+        ProductDescription productDescription = ProductDescription.builder().id(1L).title("Striped").description("Long sleeves and stuff.").rteDescription("Test").build();
+
+        ProductDescription productDescription1 = ProductDescription.builder().id(2L).title("Comfy").description("Made with cawtin").rteDescription("Really?").build();
+        productDescriptions.add(productDescription);
+        productDescriptions.add(productDescription1);
+
+
+        Product product = Product.builder().id(1L).groupedProduct(25L).name("Long Sleeve, V-Neck")
+                .productSizes(productSizes).build();
+
+        productJPAService.save(product);
+
+        productDescription1.setProduct(product);
+        productDescription.setProduct(product);
+
+        //product.addDescription(productDescription);
+        //product.addDescription(productDescription1);
+
+
+        productSize.setProduct(product);
+        productSize1.setProduct(product);
+
+        product.addCategory(onSale);
+        product.addCategory(categoryShirts);
+
+        productJPAService.save(product);
+        categoryShirts.addProduct(product);
+        onSale.addProduct(product);
+
+        categoryJPAService.save(categoryShirts);
+        categoryJPAService.save(onSale);
+
+
+        /*
+        ProductSize productSize2 = ProductSize.builder().id(3L).name("XXL").build();
+        ProductSize productSize3 = ProductSize.builder().id(4L).name("L").build();
+        Set<ProductSize> productSizes2 = new HashSet<>();
+        productSizes2.add(productSize2);
+        productSizes2.add(productSize3);
+
+        Set<ProductDescription> productDescriptions1 = new HashSet<>();
+        ProductDescription productDescription2 = ProductDescription.builder().id(3L).title("Denim").description("100% Real").rteDescription("Test").build();
+        ProductDescription productDescription3 = ProductDescription.builder().id(4L).title("Stretchy").description("Stretch all the way").rteDescription("No way!").build();
+        productDescriptions1.add(productDescription2);
+        productDescriptions1.add(productDescription3);
+
+
+        Product product1 = Product.builder().id(2L).groupedProduct(25L).name("Pants")
+                .productSizes(productSizes2).build();
+
+        productDescription2.setProduct(product1);
+        productDescription3.setProduct(product1);
+
+        //product1.addDescription(productDescription2);
+        //product1.addDescription(productDescription3);
+
+        productSize2.setProduct(product1);
+        productSize3.setProduct(product1);
+
+        product1.addCategory(onSale);
+        product1.addCategory(categoryPants);
+
+        sizeJPAService.save(productSize2);
+        sizeJPAService.save(productSize3);
+        productJPAService.save(product1);
+
+
+        categoryPants.addProduct(product1);
+        onSale.addProduct(product1);
+
+        categoryShirts.addProduct(product);
+        onSale.addProduct(product);
+        */
+    }
+
+    private void loadUserData(){
+
         Role adminRole = roleService.findByRoleName("ROLE_ADMIN");
         if(adminRole == null){
             roleService.save(Role.builder().roleName("ROLE_ADMIN").build());
@@ -75,56 +194,5 @@ public class StartUpData implements CommandLineRunner {
         userService.save(user5);
         userService.save(user6);
         userService.save(user7);
-
-
-        ProductSize productSize = ProductSize.builder().id(1L).name("0-6 Months").build();
-        ProductSize productSize1 = ProductSize.builder().id(2L).name("14/16 Months").build();
-        Set<ProductSize> productSizes = new HashSet<>();
-        productSizes.add(productSize);
-        productSizes.add(productSize1);
-
-        Set<ProductDescription> productDescriptions = new HashSet<>();
-        ProductDescription productDescription = ProductDescription.builder().id(1L).title("YES").description("Sup G").rteDescription("Test").build();
-        ProductDescription productDescription1 = ProductDescription.builder().id(2L).title("YES").description("Sup W").rteDescription("Test Again").build();
-        productDescriptions.add(productDescription);
-        productDescriptions.add(productDescription1);
-
-
-        Product product = Product.builder().id(1L).groupedProduct(25L).name("Furry Beasts")
-                .productSizes(productSizes).descriptions(productDescriptions).build();
-
-        productDescription1.setProduct(product);
-        productDescription.setProduct(product);
-        productSize.setProduct(product);
-        productSize1.setProduct(product);
-        productJPAService.save(product);
-        sizeJPAService.save(productSize);
-        sizeJPAService.save(productSize1);
-
-
-        ProductSize productSize2 = ProductSize.builder().id(3L).name("XXL").build();
-        ProductSize productSize3 = ProductSize.builder().id(4L).name("L").build();
-        Set<ProductSize> productSizes2 = new HashSet<>();
-        productSizes2.add(productSize2);
-        productSizes2.add(productSize3);
-
-        Set<ProductDescription> productDescriptions1 = new HashSet<>();
-        ProductDescription productDescription2 = ProductDescription.builder().id(3L).title("NO").description("Goat").rteDescription("Is this the difference?").build();
-        ProductDescription productDescription3 = ProductDescription.builder().id(4L).title("NO").description("Of All Time son!").rteDescription("Is this really all?").build();
-        productDescriptions1.add(productDescription2);
-        productDescriptions1.add(productDescription3);
-
-
-        Product product1 = Product.builder().id(2L).groupedProduct(25L).name("Fire Beasts")
-                .productSizes(productSizes2).descriptions(productDescriptions1).build();
-
-        productDescription2.setProduct(product1);
-        productDescription3.setProduct(product1);
-        productSize2.setProduct(product1);
-        productSize3.setProduct(product1);
-        productJPAService.save(product1);
-        sizeJPAService.save(productSize2);
-        sizeJPAService.save(productSize3);
-
     }
 }

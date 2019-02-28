@@ -1,10 +1,10 @@
 package io.lker.webstore.usermanagement.services.springjpa;
 
 import io.lker.webstore.common.model.product.Product;
+import io.lker.webstore.usermanagement.repositories.ProductDescriptionRepository;
 import io.lker.webstore.usermanagement.repositories.ProductRepository;
-import io.lker.webstore.usermanagement.services.CrudService;
 import io.lker.webstore.usermanagement.services.ProductService;
-import io.lker.webstore.usermanagement.util.exceptions.UserNotFoundException;
+import io.lker.webstore.usermanagement.util.exceptions.ProductNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,11 @@ import java.util.Set;
 public class ProductJPAService implements ProductService {
 
     private ProductRepository productRepository;
+    private ProductDescriptionRepository productDescriptionRepository;
 
-    public ProductJPAService(ProductRepository productRepository) {
+    public ProductJPAService(ProductRepository productRepository, ProductDescriptionRepository productDescriptionRepository) {
         this.productRepository = productRepository;
+        this.productDescriptionRepository = productDescriptionRepository;
     }
 
     @Override
@@ -36,11 +38,12 @@ public class ProductJPAService implements ProductService {
     @Override
     public Product findById(Long aLong) {
         return productRepository.findById(aLong)
-                .orElseThrow(() -> new UserNotFoundException(aLong));
+                .orElseThrow(() -> new ProductNotFoundException(aLong));
     }
 
     @Override
     public Product save(Product object) {
+        //object.getDescriptions().forEach((productDescription -> productDescriptionRepository.save(productDescription)));
         return productRepository.save(object);
     }
 

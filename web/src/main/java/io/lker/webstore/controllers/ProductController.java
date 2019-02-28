@@ -40,10 +40,14 @@ public class ProductController {
         return productJPAService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable Long id){
+        return productJPAService.findById(id);
+    }
+
     @GetMapping("/grouped/{groupedId}")
     public Set<Product> findByGroupedProduct(@PathVariable Long groupedId){
         return productJPAService.findByGroupedProduct(groupedId);
-
     }
 
 }
