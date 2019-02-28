@@ -2,16 +2,15 @@ package io.lker.webstore.common.model.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.lker.webstore.common.model.Description;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"product"})
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Slf4j
@@ -20,10 +19,17 @@ public class ProductDescription extends Description {
 
     @Builder
     public ProductDescription(Long id, String language, String name,
-                              String title, String description, Product product) {
+                              String title, String description, String rteDescription,
+                              Product product) {
         super(id, language, name, title, description);
+        this.rteDescription = rteDescription;
         this.product = product;
     }
+
+    @Column(name = "rte_description")
+    @Lob
+    private String rteDescription;
+
 
     @JsonIgnore
     @ManyToOne(targetEntity = Product.class)
