@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.lker.webstore.common.model.Description;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
@@ -32,6 +30,7 @@ public class ProductDescription extends Description {
     @Lob
     private String rteDescription;
 
+    @JsonIgnore
     @ManyToOne
     private Product product;
 

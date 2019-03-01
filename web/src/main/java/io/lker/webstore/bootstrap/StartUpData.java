@@ -98,12 +98,14 @@ public class StartUpData implements CommandLineRunner {
         productDescription1.setProduct(product);
         productDescription.setProduct(product);
 
-        //product.addDescription(productDescription);
-        //product.addDescription(productDescription1);
+        product.addDescription(productDescription);
+        product.addDescription(productDescription1);
 
 
         productSize.setProduct(product);
         productSize1.setProduct(product);
+        sizeJPAService.save(productSize);
+        sizeJPAService.save(productSize1);
 
         product.addCategory(onSale);
         product.addCategory(categoryShirts);
@@ -115,47 +117,50 @@ public class StartUpData implements CommandLineRunner {
         categoryJPAService.save(categoryShirts);
         categoryJPAService.save(onSale);
 
+        /*********************************/
 
-        /*
         ProductSize productSize2 = ProductSize.builder().id(3L).name("XXL").build();
-        ProductSize productSize3 = ProductSize.builder().id(4L).name("L").build();
+        sizeJPAService.save(productSize2);
+        ProductSize productSize3 = ProductSize.builder().id(4L).name("XL").build();
+        sizeJPAService.save(productSize3);
         Set<ProductSize> productSizes2 = new HashSet<>();
         productSizes2.add(productSize2);
         productSizes2.add(productSize3);
 
-        Set<ProductDescription> productDescriptions1 = new HashSet<>();
-        ProductDescription productDescription2 = ProductDescription.builder().id(3L).title("Denim").description("100% Real").rteDescription("Test").build();
-        ProductDescription productDescription3 = ProductDescription.builder().id(4L).title("Stretchy").description("Stretch all the way").rteDescription("No way!").build();
-        productDescriptions1.add(productDescription2);
-        productDescriptions1.add(productDescription3);
+        Set<ProductDescription> productDescriptions2 = new HashSet<>();
+        ProductDescription productDescription2 = ProductDescription.builder().id(3L).title("Striped").description("Long sleeves and stuff.").rteDescription("Test").build();
+
+        ProductDescription productDescription3 = ProductDescription.builder().id(4L).title("Comfy").description("Made with cawtin").rteDescription("Really?").build();
+        productDescriptions2.add(productDescription2);
+        productDescriptions2.add(productDescription3);
 
 
-        Product product1 = Product.builder().id(2L).groupedProduct(25L).name("Pants")
+        Product product2 = Product.builder().id(2L).groupedProduct(25L).name("Long Sleeve, V-Neck, Female")
                 .productSizes(productSizes2).build();
 
-        productDescription2.setProduct(product1);
-        productDescription3.setProduct(product1);
+        productJPAService.save(product2);
 
-        //product1.addDescription(productDescription2);
-        //product1.addDescription(productDescription3);
+        productDescription2.setProduct(product2);
+        productDescription3.setProduct(product2);
 
-        productSize2.setProduct(product1);
-        productSize3.setProduct(product1);
+        product2.addDescription(productDescription2);
+        product2.addDescription(productDescription3);
 
-        product1.addCategory(onSale);
-        product1.addCategory(categoryPants);
 
+        productSize2.setProduct(product2);
+        productSize3.setProduct(product2);
         sizeJPAService.save(productSize2);
         sizeJPAService.save(productSize3);
-        productJPAService.save(product1);
 
+        product2.addCategory(onSale);
+        product2.addCategory(categoryShirts);
 
-        categoryPants.addProduct(product1);
-        onSale.addProduct(product1);
+        productJPAService.save(product2);
+        categoryShirts.addProduct(product2);
+        onSale.addProduct(product2);
 
-        categoryShirts.addProduct(product);
-        onSale.addProduct(product);
-        */
+        categoryJPAService.save(categoryShirts);
+        categoryJPAService.save(onSale);
     }
 
     private void loadUserData(){
