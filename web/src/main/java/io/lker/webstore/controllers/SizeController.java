@@ -7,6 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/sizes")
@@ -27,6 +29,11 @@ public class SizeController {
     public ProductSize save(@RequestBody ProductSize productSize){
         log.info("SAVING SIZE");
         return sizeJPAService.save(productSize);
+    }
+
+    @GetMapping
+    public Set<ProductSize> findAll() {
+        return sizeJPAService.findAll();
     }
 
 }

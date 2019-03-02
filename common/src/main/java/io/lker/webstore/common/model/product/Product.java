@@ -1,12 +1,12 @@
 package io.lker.webstore.common.model.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.lker.webstore.common.model.catalogue.Category;
 import io.lker.webstore.common.model.user.BaseEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +36,13 @@ public class Product extends BaseEntity {
 
     private Long productQuantity;
 
+    // Might remove, add to category
     private boolean isFeatured;
+
+    @Column(name = "date_available")
+    private Date dateAvailable = new Date();
+
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductDescription> descriptions = new HashSet<>();
