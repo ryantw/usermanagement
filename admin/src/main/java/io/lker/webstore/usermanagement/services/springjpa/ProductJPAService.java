@@ -31,11 +31,6 @@ public class ProductJPAService implements ProductService {
     }
 
     @Override
-    public Set<Product> findByGroupedProduct(Long id) {
-        return productRepository.findByGroupedProduct(id);
-    }
-
-    @Override
     public Product findById(Long aLong) {
         return productRepository.findById(aLong)
                 .orElseThrow(() -> new ProductNotFoundException(aLong));

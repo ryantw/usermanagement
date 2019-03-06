@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    Set<Product> findByGroupedProduct(Long id);
+    //Set<Product> findByGroupedProduct(Long id);
 }

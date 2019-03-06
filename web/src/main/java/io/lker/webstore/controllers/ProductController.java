@@ -45,9 +45,4 @@ public class ProductController {
         return productJPAService.findById(id);
     }
 
-    @GetMapping("/grouped/{groupedId}")
-    public Set<Product> findByGroupedProduct(@PathVariable Long groupedId){
-        return productJPAService.findByGroupedProduct(groupedId);
-    }
-
 }

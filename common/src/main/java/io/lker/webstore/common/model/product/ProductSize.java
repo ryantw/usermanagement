@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode(exclude = {"product"})
+@EqualsAndHashCode(exclude = {"productOption"})
 @NoArgsConstructor
 @Entity
 @Slf4j
@@ -19,11 +19,11 @@ import javax.persistence.*;
 public class ProductSize extends BaseEntity {
 
     @Builder
-    public ProductSize(Long id, String name, String description, Product product){
+    public ProductSize(Long id, String name, String description, ProductOption productOption){
         super(id);
         this.name = name;
         this.description = description;
-        this.product = product;
+        this.productOption = productOption;
     }
 
     @Column(name = "name")
@@ -33,7 +33,6 @@ public class ProductSize extends BaseEntity {
     private String description;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToOne
+    private ProductOption productOption;
 }

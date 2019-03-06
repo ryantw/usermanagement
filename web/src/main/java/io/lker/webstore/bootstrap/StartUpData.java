@@ -4,6 +4,7 @@ import io.lker.webstore.common.model.catalogue.Catalogue;
 import io.lker.webstore.common.model.catalogue.Category;
 import io.lker.webstore.common.model.product.Product;
 import io.lker.webstore.common.model.product.ProductDescription;
+import io.lker.webstore.common.model.product.ProductOption;
 import io.lker.webstore.common.model.product.ProductSize;
 import io.lker.webstore.common.model.user.Role;
 import io.lker.webstore.common.model.user.User;
@@ -76,36 +77,32 @@ public class StartUpData implements CommandLineRunner {
 
         ProductSize productSize = ProductSize.builder().id(1L).name("0-6 Months").build();
         sizeJPAService.save(productSize);
-        ProductSize productSize1 = ProductSize.builder().id(2L).name("14/16 Months").build();
-        sizeJPAService.save(productSize1);
+        /*
         Set<ProductSize> productSizes = new HashSet<>();
         productSizes.add(productSize);
         productSizes.add(productSize1);
+        */
 
-        Set<ProductDescription> productDescriptions = new HashSet<>();
         ProductDescription productDescription = ProductDescription.builder().id(1L).title("Striped").description("Long sleeves and stuff.").rteDescription("Test").build();
-
         ProductDescription productDescription1 = ProductDescription.builder().id(2L).title("Comfy").description("Made with cawtin").rteDescription("Really?").build();
-        productDescriptions.add(productDescription);
-        productDescriptions.add(productDescription1);
 
-
-        Product product = Product.builder().id(1L).groupedProduct(25L).name("Long Sleeve, V-Neck")
-                .productSizes(productSizes).build();
+        Product product = Product.builder().id(1L).name("Long Sleeve, V-Neck").build();
 
         productJPAService.save(product);
+
+        ProductOption productOption = ProductOption.builder().productSize(productSize)
+                .color("red").quantity(10).build();
+
+        productSize.setProductOption(productOption);
+        productJPAService.save(product);
+
+        product.addProductOption(productOption);
 
         productDescription1.setProduct(product);
         productDescription.setProduct(product);
 
         product.addDescription(productDescription);
         product.addDescription(productDescription1);
-
-
-        productSize.setProduct(product);
-        productSize1.setProduct(product);
-        sizeJPAService.save(productSize);
-        sizeJPAService.save(productSize1);
 
         product.addCategory(onSale);
         product.addCategory(categoryShirts);
@@ -117,7 +114,7 @@ public class StartUpData implements CommandLineRunner {
         categoryJPAService.save(categoryShirts);
         categoryJPAService.save(onSale);
 
-        /*********************************/
+        /********************************
 
         ProductSize productSize2 = ProductSize.builder().id(3L).name("XXL").build();
         sizeJPAService.save(productSize2);
@@ -161,6 +158,7 @@ public class StartUpData implements CommandLineRunner {
 
         categoryJPAService.save(categoryShirts);
         categoryJPAService.save(onSale);
+         */
     }
 
     private void loadUserData(){

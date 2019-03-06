@@ -19,37 +19,28 @@ import java.util.Set;
 public class Product extends BaseEntity {
 
     @Builder
-    public Product(Long id, String name, Long groupedProduct,
-                   Long productQuantity, Set<ProductSize> productSizes) {
+    public Product(Long id, String name) {
         super(id);
         this.name = name;
-        this.groupedProduct = groupedProduct;
-        this.productQuantity = productQuantity;
-        this.productSizes = productSizes;
     }
+
+    @Column(name = "color")
+    private String color;
 
     @Column(name = "name")
     private String name;
 
-    // Grouping products LIKE products
-    private Long groupedProduct;
-
-    private Long productQuantity;
-
-    // Might remove, add to category
-    private boolean isFeatured;
+    // Display product on webpage
+    private boolean displayOnWebpage;
 
     @Column(name = "date_available")
     private Date dateAvailable = new Date();
 
-
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductDescription> descriptions = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private Set<ProductSize> productSizes;
-
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+    private Set<ProductOption> productOptions = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "category_products",
@@ -58,6 +49,12 @@ public class Product extends BaseEntity {
     )
     private Set<Category> categories = new HashSet<>();
 
+    public void addProductOption(ProductOption productOption){
+        if(productOptions == null)
+            this.productOptions = new HashSet<>();
+        productOption.setProduct(this);
+        productOptions.add(productOption);
+    }
 
     public void addDescription(ProductDescription description){
         if(descriptions == null)
