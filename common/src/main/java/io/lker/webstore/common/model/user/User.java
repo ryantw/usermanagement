@@ -1,10 +1,13 @@
 package io.lker.webstore.common.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.lker.webstore.common.model.preorder.PreOrder;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -41,10 +44,7 @@ public class User extends BaseEntity {
         inverseJoinColumns = @JoinColumn(name="role_id"))
     private Collection<Role> roles;
 
-    // todo
-    // do not hard code email/username as
-    // login identity, set here and use wherever.
-    private String loginIdentity(){
-        return this.emailAddress;
-    }
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "preOrderUsers")
+    private Set<PreOrder> preOrders;
 }

@@ -1,11 +1,13 @@
 package io.lker.webstore.common.model.product;
 
 import io.lker.webstore.common.model.catalogue.Category;
+import io.lker.webstore.common.model.preorder.PreOrder;
 import io.lker.webstore.common.model.user.BaseEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,11 +32,24 @@ public class Product extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "price")
+    private BigDecimal price;
+
     // Display product on webpage
     private boolean displayOnWebpage;
 
-    @Column(name = "date_available")
-    private Date dateAvailable = new Date();
+    // Won't display on page if Preorder
+    private boolean isPreOrder;
+
+    // Added to DB
+    @Column(name = "date_added")
+    private Date dateAdded = new Date();
+
+    // Last modified, bring in audit log
+    @Column(name = "date_modified")
+    private Date dateModified = new Date();
+
+    // Date to display on webpage?
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private Set<ProductDescription> descriptions = new HashSet<>();
@@ -48,6 +63,9 @@ public class Product extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
+
+    @OneToOne(mappedBy = "product")
+    private PreOrder preOrder;
 
     public void addProductOption(ProductOption productOption){
         if(productOptions == null)
