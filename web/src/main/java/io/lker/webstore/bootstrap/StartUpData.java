@@ -2,6 +2,8 @@ package io.lker.webstore.bootstrap;
 
 import io.lker.webstore.common.model.catalogue.Catalogue;
 import io.lker.webstore.common.model.catalogue.Category;
+import io.lker.webstore.common.model.preorder.PreOrder;
+import io.lker.webstore.common.model.preorder.PreOrderStatus;
 import io.lker.webstore.common.model.product.Product;
 import io.lker.webstore.common.model.product.ProductDescription;
 import io.lker.webstore.common.model.product.ProductOption;
@@ -27,17 +29,20 @@ public class StartUpData implements CommandLineRunner {
     private final SizeJPAService sizeJPAService;
     private final CatalogueJPAService catalogueJPAService;
     private final CategoryJPAService categoryJPAService;
+    private final PreOrderJPAService preOrderJPAService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public StartUpData(UserService userService, RoleJPAService roleService, ProductJPAService productJPAService,
                        SizeJPAService sizeJPAService, CatalogueJPAService catalogueJPAService,
-                       CategoryJPAService categoryJPAService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                       CategoryJPAService categoryJPAService, PreOrderJPAService preOrderJPAService,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.productJPAService = productJPAService;
         this.sizeJPAService = sizeJPAService;
         this.catalogueJPAService = catalogueJPAService;
         this.categoryJPAService = categoryJPAService;
+        this.preOrderJPAService = preOrderJPAService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -113,6 +118,11 @@ public class StartUpData implements CommandLineRunner {
 
         categoryJPAService.save(categoryShirts);
         categoryJPAService.save(onSale);
+
+        PreOrder preOrder = PreOrder.builder().preOrderStatus(PreOrderStatus.COLLECT_ORDERS)
+                .product(product).build();
+        User user = User.builder().firstName("Pre").lastName("Order").emailAddress("pre@order.com").build();
+        preOrder.addPreOrderUser(user);
 
         /********************************
 

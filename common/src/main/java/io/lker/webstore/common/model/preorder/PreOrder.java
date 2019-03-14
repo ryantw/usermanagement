@@ -40,4 +40,15 @@ public class PreOrder extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> preOrderUsers = new HashSet<>();
+
+    public void addPreOrderUser(User user){
+        if(preOrderUsers == null)
+            this.preOrderUsers = new HashSet<>();
+        if(preOrderUsers.contains(user)){
+            preOrderUsers.remove(user);
+            preOrderUsers.add(user);
+        } else {
+            preOrderUsers.add(user);
+        }
+    }
 }
