@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -46,5 +47,12 @@ public class User extends BaseEntity {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "preOrderUsers")
-    private Set<PreOrder> preOrders;
+    private Set<PreOrder> preOrders = new HashSet<>();
+
+    public void addPreOrder(PreOrder preOrder){
+        if(preOrders.contains(preOrder))
+            preOrders.remove(preOrder);
+
+        preOrders.add(preOrder);
+    }
 }

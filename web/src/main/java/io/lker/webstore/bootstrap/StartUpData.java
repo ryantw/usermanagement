@@ -123,6 +123,11 @@ public class StartUpData implements CommandLineRunner {
                 .product(product).build();
         User user = User.builder().firstName("Pre").lastName("Order").emailAddress("pre@order.com").build();
         preOrder.addPreOrderUser(user);
+        user.addPreOrder(preOrder);
+
+        userService.save(user);
+        preOrderJPAService.save(preOrder);
+
 
         /********************************
 

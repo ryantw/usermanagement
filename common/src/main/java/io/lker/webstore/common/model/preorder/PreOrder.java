@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"product"})
+@EqualsAndHashCode(exclude = {"product", "preOrderUsers"})
 @Entity
 @Builder
 @Slf4j
@@ -34,7 +34,7 @@ public class PreOrder extends BaseEntity {
     @JoinColumn(name="product_id")
     private Product product;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "preorder_users",
             joinColumns = @JoinColumn(name = "preorders_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
