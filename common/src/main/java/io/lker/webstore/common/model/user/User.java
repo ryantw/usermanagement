@@ -2,6 +2,7 @@ package io.lker.webstore.common.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.lker.webstore.common.model.preorder.PreOrder;
+import io.lker.webstore.common.model.product.ProductDescription;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +40,9 @@ public class User extends BaseEntity {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Address> descriptions = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
