@@ -205,6 +205,9 @@ public class StartUpData implements CommandLineRunner {
         User user7 = User.builder().id(7L).firstName("Vince").lastName("Stratful")
                 .emailAddress("vstrat@gmail.com").build();
 
+        User user8 = User.builder().id(8L).firstName("Ava").lastName("Walker")
+                .emailAddress("avawalker@test.com").build();
+
         userService.save(user1);
         userService.save(user2);
         userService.save(user3);
@@ -212,5 +215,6 @@ public class StartUpData implements CommandLineRunner {
         userService.save(user5);
         userService.save(user6);
         userService.save(user7);
+        userService.save(user8);
     }
 }

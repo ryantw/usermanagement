@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,10 @@ import javax.persistence.*;
 @Table(name = "order")
 public class Order extends BaseEntity {
 
-    @OneToOne(mappedBy = "order")
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
     private DeliveryType deliveryType;
 
     @ManyToOne
