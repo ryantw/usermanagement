@@ -46,7 +46,11 @@ public class UserController {
     @DeleteMapping("/{userId}")
     void deleteSingleUser(@PathVariable Long userId){
         log.info("Deleting USER_ID: " + userId);
-        userService.deleteById(userId);
+
+        // Permanently delete.
+        //userService.deleteById(userId);
+
+        userService.disableUser(userId);
     }
 
     @PutMapping("/{userId}")

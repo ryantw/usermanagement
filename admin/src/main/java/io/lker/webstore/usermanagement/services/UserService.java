@@ -10,4 +10,5 @@ public interface UserService extends CrudService<User, Long> {
 
     Set<User> findAllByLastNameLike(String lastName);
     User findByEmailAddress(String email);
+    void disableUser(Long id);
 }

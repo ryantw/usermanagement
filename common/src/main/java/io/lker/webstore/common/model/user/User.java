@@ -21,13 +21,15 @@ public class User extends BaseEntity {
 
     @Builder
     public User(Long id, String firstName, String lastName,
-                String emailAddress, String password, Collection<Role> roles){
+                String emailAddress, String password, Collection<Role> roles,
+                boolean enabled){
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.password = password;
         this.roles = roles;
+        this.enabled = true;
     }
 
     @Column(name = "firstName")
@@ -41,6 +43,9 @@ public class User extends BaseEntity {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Address> descriptions = new HashSet<>();

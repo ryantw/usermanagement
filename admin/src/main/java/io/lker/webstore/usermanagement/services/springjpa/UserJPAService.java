@@ -34,6 +34,13 @@ public class UserJPAService implements UserService {
     }
 
     @Override
+    public void disableUser(Long id) {
+        User disableUser = this.findById(id);
+        disableUser.setEnabled(false);
+        this.save(disableUser);
+    }
+
+    @Override
     public Set<User> findAll() {
         Set<User> users = new HashSet<>();
         userRepository.findAll().forEach(users::add);
@@ -61,5 +68,7 @@ public class UserJPAService implements UserService {
     public void deleteById(Long aLong) {
         userRepository.deleteById(aLong);
     }
+
+
 
 }
