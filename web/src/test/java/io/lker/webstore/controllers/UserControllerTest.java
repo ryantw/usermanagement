@@ -110,7 +110,7 @@ class UserControllerTest {
     void testDeleteSingleUser() throws Exception{
         mockMvc.perform(delete("/api/user/1"))
                 .andExpect(status().isOk());
-        verify(userService, times(1)).deleteById(anyLong());
+        verify(userService, times(1)).disableUser(anyLong());
 
     }
 }
