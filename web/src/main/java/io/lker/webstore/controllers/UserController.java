@@ -61,6 +61,7 @@ public class UserController {
             user.setFirstName(newUser.getFirstName());
             user.setLastName(newUser.getLastName());
             user.setEmailAddress(newUser.getEmailAddress());
+            user.setEnabled(newUser.isEnabled());
             return userService.save(user);
         } catch (UserNotFoundException e){
             return userService.save(newUser);
