@@ -42,10 +42,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                     authentication.setToken(authToken);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-
+            } else {
+                httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Please Login.");
+                return;
             }
         }
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
