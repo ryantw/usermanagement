@@ -30,8 +30,8 @@ public class Address extends BaseEntity {
     @Column(name = "zip")
     private int zip;
 
-    @Column(name = "primary")
-    private String primary;
+    @Column(name = "primary_address")
+    private String primary_address;
 
     @ManyToOne
     private User user;

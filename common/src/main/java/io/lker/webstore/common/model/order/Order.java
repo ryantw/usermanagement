@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Entity
 @Builder
 @Slf4j
-@Table(name = "order")
+@Table(name = "customer_order")
 public class Order extends BaseEntity {
 
     @Column(name = "price")
