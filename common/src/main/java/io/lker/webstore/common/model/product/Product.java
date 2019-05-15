@@ -26,9 +26,6 @@ public class Product extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "color")
-    private String color;
-
     @Column(name = "name")
     private String name;
 
@@ -67,6 +64,9 @@ public class Product extends BaseEntity {
     @OneToOne(mappedBy = "product")
     private PreOrder preOrder;
 
+    /*
+        Consider moving ot helper classes? Clean POJO models
+     */
     public void addProductOption(ProductOption productOption){
         if(productOptions == null)
             this.productOptions = new HashSet<>();

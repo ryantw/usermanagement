@@ -48,7 +48,7 @@ public class User extends BaseEntity {
     private boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Address> descriptions = new HashSet<>();
+    private Set<Address> addresses = new HashSet<>();
 
     //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     //private Set<Order> orders = new HashSet<>();
@@ -62,6 +62,7 @@ public class User extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "preOrderUsers")
     private Set<PreOrder> preOrders = new HashSet<>();
 
+    // Don't like, might move out to helper class
     public void addPreOrder(PreOrder preOrder){
         if(preOrders.contains(preOrder))
             preOrders.remove(preOrder);
