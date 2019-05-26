@@ -4,6 +4,7 @@ import io.lker.webstore.common.model.product.Product;
 import io.lker.webstore.usermanagement.services.springjpa.ProductJPAService;
 import io.lker.webstore.usermanagement.services.springjpa.SizeJPAService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public Set<Product> findAll(){
-        return productJPAService.findAll();
+    public ResponseEntity<?> findAll(){
+        Set<Product> response = productJPAService.findAll();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
