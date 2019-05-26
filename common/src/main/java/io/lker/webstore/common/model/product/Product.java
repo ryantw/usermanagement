@@ -1,5 +1,6 @@
 package io.lker.webstore.common.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.lker.webstore.common.model.catalogue.Category;
 import io.lker.webstore.common.model.preorder.PreOrder;
 import io.lker.webstore.common.model.user.BaseEntity;
@@ -61,6 +62,7 @@ public class Product extends BaseEntity {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @JsonIgnore
     @OneToOne(mappedBy = "product")
     private PreOrder preOrder;
 

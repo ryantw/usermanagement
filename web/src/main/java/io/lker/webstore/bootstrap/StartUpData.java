@@ -184,7 +184,7 @@ public class StartUpData implements CommandLineRunner {
         }
         adminRole = roleService.findByRoleName("ROLE_ADMIN");
         User user1 = User.builder().id(1L).firstName("Ryan").lastName("Walker")
-                .emailAddress("ryanwalker@example.com")
+                .emailAddress("r@r.com")
                 .password(bCryptPasswordEncoder.encode("test"))
                 .roles(Arrays.asList(adminRole))
                 .build();
