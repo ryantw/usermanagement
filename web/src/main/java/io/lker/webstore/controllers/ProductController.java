@@ -43,8 +43,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id){
-        return productJPAService.findById(id);
+    public ResponseEntity<?> getProduct(@PathVariable Long id){
+        Product response = productJPAService.findById(id);
+        return ResponseEntity.ok(response);
     }
 
 }
